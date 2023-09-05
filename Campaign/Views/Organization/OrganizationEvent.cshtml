@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Campaign.Models.OrganizationFieldModel>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div>
+    <table id="zero-configuration" class="display table nowrap table-striped table-hover text-center" style="width:100%">
+        <thead>
+            <tr>
+                <th width="10%">S.N</th>
+                <th width="10%">Organization Name</th>
+                <th width="10%">Event Type</th>
+                <th width="10%">Status </th>
+                <th width="10%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model is not null)
+            {
+                int i = 1;
+                @foreach (var organization in Model)
+                {
+                    <tr>
+                        <td>@(i++)</td>
+                        <td>@organization.OrganizationName</td>
+                        <td>@organization.OrgFormTypeName</td>
+                        <td data-label="Status "><a href="#" class="badge badge-pill @(organization.IsDeleted ? "alert-danger" : "alert-primary") f-12">@(organization.IsDeleted ? "Not Active" : "Active")</a></td>
+                        <td>
+                            <a href="@Url.Action("UpdateOrganizationEvent","Organization",new {Id=organization.Id })"><i class="fa fa-edit text-c-green " title="Edit"></i>Update</a>
+                            <a href="@Url.Action("DeleteOrganizationEvent","Organization",new {Id=organization.Id })"><i class="fa fa-delete  ext-c-yellow " title="Delete"></i>Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

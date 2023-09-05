@@ -1,0 +1,23 @@
+﻿@model Campaign.Models.FieldDetailsModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="row">
+    <div class="col col-md-4">
+        <div class="form-group">
+            <label for="FieldName">Field Name:</label>
+            @Html.TextBoxFor(m => m.FieldName, "Field Name", new {@Value = "FieldName"})
+            @Html.ValidationMessageFor(m => m.FieldName, "", new {@class = "red"})
+        </div>
+    </div>
+    <div class="col col-md-4">
+        <div class="form-group">
+            <label for="DataType">Data Type:</label>
+            @Html.TextBoxFor(m => m.DataType, "Data Type", new {@Value = "DataType"})
+            @Html.ValidationMessageFor(m => m.DataType, "", new {@class = "red"})
+        </div>
+    </div>
+</div>

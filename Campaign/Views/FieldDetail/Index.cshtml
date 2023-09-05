@@ -1,0 +1,89 @@
+﻿@model Campaign.Models.FieldViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="form-control">
+    <div class="row">
+        <div class="pcoded-inner-content">
+            <div class="page-header">
+                <h2>Add Fields</h2>
+                <div class="page-block">
+                    @using (Html.BeginForm("AddField", "FieldDetail", FormMethod.Post))
+                    {
+                        <input type="hidden" id="Jsondata" name="Jsondata">
+                        <div class="row align-items-center">
+
+                            <table id="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div>Column Field</div>
+                                            <span class="text-danger" asp-validation-for="Field[0].FieldName"></span>
+                                        </th>
+                                        <th>Data Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-body">
+                                    <!-- Dynamic rows will be added here -->
+                                </tbody>
+                                <button type="button" id="add-row">Add Field</button>
+                            </table>
+
+                        </div>
+                        <button id="btnSubmit" class="btn btn-success" type="submit">Save</button>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/script.js"></script>
+    <script>
+
+
+
+
+    </script>
+    @*   <script type="text/javascript">
+        var i = 1;
+        function BtnAdd() {
+            debugger;
+            var v = $("#TRow").clone().appendTo("TBody");
+            $("#sn").val(i);
+            i++;
+            $(v).find("input").val('');
+            $(v).removeClass('d-none');
+        }
+
+        function BtnDel(v) {
+            $(v).parent().parent().remove();
+        }
+
+        $("#dynamicForm").submit(function (e) {
+            debugger;
+            e.preventDefault();
+            $.ajax({
+                url: '@Url.Action("AddField", "FieldDetail")',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function () {
+                    // Do something on success
+                }
+            });
+        });
+    </script> *@
+}
+@* var id = $('#zero-configuration tr:last').attr('id');
+            var nums = id.split('_').pop();
+            var num =parseInt(nums)+1;
+            var newid = $("#TRow_" + num + "");
+            var v = $("#TRow").clone().appendTo("TBody");
+            var value = $("#sn_id_1").val();
+            $("#sn_id_2").text(@i);
+            $(v).find("input").val(''); *@

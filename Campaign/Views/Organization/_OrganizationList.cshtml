@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Campaign.Models.OrganizationModel>
+
+<div>
+    <table id="zero-configuration" class="display table nowrap table-striped table-hover text-center" style="width:100%">
+        <thead>
+            <tr>
+                <th width="10%">S.N</th>
+                <th width="10%">Organization Name</th>
+                <th width="10%">Full Address</th>
+                <th width="10%">Email Address</th>
+                <th width="10%">Mobile No.</th>
+                <th width="10%">Username </th>
+                <th width="10%">Registration Number</th>
+                <th width="10%">Vat/PAN Number</th>
+                <th width="10%">Created By</th>
+                <th width="10%">Director's Name </th>
+                <th width="10%">Status </th>
+                <th width="10%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model is not null)
+            {
+                int i = 1;
+                @foreach (var organization in Model)
+                {
+                    <tr>
+                        <td>@(i++)</td>
+                        <td>@organization.OrganizationName</td>
+                        <td>@organization.FullAddress</td>
+                        <td>@organization.EmailAddress</td>
+                        <td>@organization.MobileNo</td>
+                        <td>@organization.UserName</td>
+                        <td>@organization.RegistrationNumber</td>
+                        <td>@organization.VatPanNumber</td>
+                        <td>@organization.CreatedBy</td>
+                        <td>@organization.DirectorName</td>
+                        <td data-label="Status "><a href="#!" class="badge badge-pill @(organization.IsActive ? "alert-primary" : "badge-secondary") f-12">@(organization.IsActive ? "Active" : "Not Active")</a></td>
+                        <td>
+                            <a href="@Url.Action("OrganizationEvent","Organization",new {Id=organization.Id })"><i class="icon ni ni-eye" title="View"></i>View Event</a>
+                            <a href="@Url.Action("UpdateOrganization","Organization",new {Id=organization.Id })"><i class="fa fa-edit text-c-green " title="Edit"></i>Update</a>
+                            <a href="@Url.Action("DeleteOrganization","Organization",new {Id=organization.Id })"><i class="fa fa-delete  ext-c-yellow " title="Delete"></i>Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

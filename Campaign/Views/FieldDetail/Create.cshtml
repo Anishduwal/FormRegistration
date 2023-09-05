@@ -1,0 +1,113 @@
+﻿@model Campaign.Models.FieldViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Field";
+}
+<div class="form-control">
+    <div class="row">
+        <div class="pcoded-inner-content">
+            <div class="page-header">
+                <h2>Items Details</h2>
+                <div class="page-block">
+                    @using (Html.BeginForm("AddField", "FieldDetail", FormMethod.Post, new { id = "MainForm" }))
+                    {
+                        <div class="form-group col-md-5">
+                            <label asp-for="Field[0].FieldName"></label>
+                            @Html.TextBoxFor(m => m.Field[0].FieldName)
+
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label asp-for="Field[0].DataType"></label>
+                            @* <input asp-for="Field[0].DataType"> *@
+                            @Html.DropDownList("Field[0].DataType", new SelectList(ViewBag.DataType),  "select datatype")
+                            
+                        </div>
+                        <div class="form-group">
+                            <input id="Addbutton" type="button" onclick="BtnAdd()" value="Add">
+                        </div>
+                        <div id="TextBoxContainer">
+                        </div>
+                        <div>
+                            <input type="submit" class="btn btn-primary" value="Save">
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var i = 1;
+            debugger;
+            $("#Addbutton").click(function () {
+                debugger;
+                console.log("test");
+                var div = $("<div />");
+                var value = "";
+                var fieldbox = $("<input />").attr("type", "textbox").attr("name", "Field[" + i + "].FieldName");
+                var databox = $("<input />").attr("type", "textbox").attr("name", "Field[" + i + "].DataType");
+
+                fieldbox.val(value);
+                databox.val(value);
+                div.append(fieldbox);
+                div.append(databox);
+                var button = $("<input />").attr("type", "button").attr("value", "Remove");
+                button.attr("onclick", "RemoveTextBox(this)");
+                div.append(button);
+                $("#TextBoxContainer").append(div);
+                i++;
+            });
+
+            // function BtnAdd() {
+            //     debugger
+            //     console.log("test1");
+            //     var v = $("#TRow").clone().appendTo("TBody");
+            //     $("#sn").val(i);
+            //     i++;
+            //     $(v).find("input").val('');
+            //     $(v).removeClass('d-none');
+            // }
+        });
+
+
+        function RemoveTextBox(button) {
+            $(button).parent().remove();
+        }
+
+        // $(function () {
+        //     /*loaddata();*/
+        //     $("#btnSave").click(function () {
+        //         var form = $("#MainForm")[0];
+        //         $postURL = $("#MainForm").attr('action');
+        //         var data = new FormData(form);
+        //         //data = $(this).serialize();
+        //         $.ajax({
+        //             type: "POST",
+        //             enctype: 'multipart/form-data',
+        //             url: $postURL,
+        //             data: data,
+        //             processData: false,
+        //             contentType: false,
+        //             cache: false,
+        //             timeout: 600000,
+        //             success: function (response) {
+        //                 var stat = response.Status || true;
+        //                 if (stat) {
+
+        //                 }
+        //             }, error: function (err) {
+
+        //             }
+        //         });
+        //     });
+        //     return false;
+        // });
+    </script>
+}

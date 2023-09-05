@@ -1,0 +1,85 @@
+﻿@model Campaign.Models.OrganizationModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="pcoded-wrapper">
+    <div class="pcoded-content">
+        <a href="@Url.Action("Index" , "Organization")>Back</a>
+        <div class="pcoded-inner-content">
+            <form action="@Url.Action("UpdateOrganization", "Organization")" method="post">
+                <div class="form-group">
+                    <div col="6">
+                        @Html.TextBoxFor(m => m.Id, "Name", new {@Value = "Id", @type = "hidden"})
+
+                        <label for="OrganizationName">Organization Name:</label>
+                        @Html.TextBoxFor(m => m.OrganizationName, new {@Value = "OrganizationName"})
+                        @Html.ValidationMessageFor(m => m.OrganizationName, "", new {@class = "red"})
+
+                    </div>
+                    <div col="6">
+                        <label for="FullAddress">Full Address:</label>
+                        @Html.TextBoxFor(m => m.FullAddress, new {@Value = "FullAddress"})
+                        @Html.ValidationMessageFor(m => m.FullAddress, "", new {@class = "red"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div col="6">
+                        <label for="EmailAddress">Email Address:</label>
+                        @Html.TextBoxFor(m => m.EmailAddress, new {@Value = "EmailAddress", @type = "email"})
+                        @Html.ValidationMessageFor(m => m.EmailAddress, "", new {@class = "red"})
+                    </div>
+                    <div col="6">
+                        <label for="MobileNo">Mobile Number:</label>
+                        @Html.TextBoxFor(m => m.MobileNo, new {@Value = "MobileNo", @type = "number"})
+                        @Html.ValidationMessageFor(m => m.MobileNo, "", new {@class = "red"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div col="6">
+                        <label for="startdate">Username:</label>
+                        @Html.TextBoxFor(m => m.UserName, new {@Value = "UserName"})
+                        @Html.ValidationMessageFor(m => m.MobileNo, "", new {@class = "red"})
+                    </div>
+                    <div col="6">
+                        <label for="Password">Password:</label>
+                        @Html.TextBoxFor(m => m.Password, new {@Value = "Password", @type = "required"})
+                        @Html.ValidationMessageFor(m => m.Password, "", new {@class = "red"})
+                    </div>
+                    <div col="6">
+                        <label for="RegistrationNumber">Registration Number:</label>
+                        @Html.TextBoxFor(m => m.RegistrationNumber, new {@Value = "RegistrationNumber"})
+                        @Html.ValidationMessageFor(m => m.RegistrationNumber, "", new {@class = "red"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div col="6">
+                        <label for="DirectorName">Director's Name:</label>
+                        @Html.TextBoxFor(m => m.DirectorName, new {@Value = "DirectorName"})
+                        @Html.ValidationMessageFor(m => m.DirectorName, "", new {@class = "red"})
+                    </div>
+                    <div col="6">
+                        <label for="UpdatedBy">Updated By:</label>
+                        @Html.TextBoxFor(m => m.UpdatedBy, new {@Value = "UpdatedBy"})
+                        @Html.ValidationMessageFor(m => m.UpdatedBy, "", new {@class = "red"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div col="6">
+                        <label for="VatPanNumber">Vat/Pan Number:</label>
+                        @Html.TextBoxFor(m => m.VatPanNumber, new {@Value = "VatPanNumber"})
+                        @Html.ValidationMessageFor(m => m.VatPanNumber, "", new {@class = "red"})
+                    </div>
+                    <div col="6">
+                        <label for="VatPanImage">Vat/Pan Image:</label>
+                        @Html.TextBoxFor(m => m.VatPanImage, new {@Value = "VatPanImage"})
+                        @Html.ValidationMessageFor(m => m.VatPanImage, "", new {@class = "red"})
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

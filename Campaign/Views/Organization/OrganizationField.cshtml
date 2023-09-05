@@ -1,0 +1,132 @@
+﻿@model Campaign.Models.OrganizationFieldModel
+
+<div class="page-header">
+    <h2>Add Field Details</h2>
+    <div class="page-block">
+        @using (Html.BeginForm("OrganizationField", "Organization", FormMethod.Post, new { @id = "MainForm" }))
+        {
+            @Html.HiddenFor(model => model.JsonField, new{ @class="form-control", @id="JsonField"})
+            <div class="form-group col-md-5">
+                <div col="6">
+                    <label for="name"> Select Organization Name:</label>
+                    @Html.DropDownListFor(model => model.OrgId, ViewBag.OrgId as SelectList, "Select Organization Name", new { @class = "form-control", @id="OrgId"})
+                    <span id="dvMessage" asp-validation-for="OrgId" class="alert-danger"></span>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <div col="6">
+                    <label for="name"> Enter Organization Type Name:</label>
+                    @Html.EditorFor(model => model.OrgFormTypeName, "", new{ @class = "form-control", @id="FormType"})
+                    <span id="dvMsg" asp-validation-for="OrgFormTypeName" class="alert-danger"></span>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <div col="6">
+                    <table class="display table nowrap table-striped table-hover text-center" style="width:100%">
+                        <div col-2>
+                            <a href="@Url.Action("Index", "FieldDetail")" data-toggle="modal" data-target="#add-new">
+                                <button type="button" class="btn btn-success">Add Fields</button>
+                            </a>
+                        </div>
+                        <thead>
+                            <tr>
+                                <th width="10%">S.N</th>
+                                <th width="10%">Field Name</th>
+                                <th width="10%">Check</th>
+                            </tr>
+                        </thead>
+                        @{
+                            int i = 1;
+                        }
+                        @foreach (var data in Model.Field)
+                        {
+                            <tbody>
+                                <tr class="trrow">
+                                    <td>@(i++)</td>
+                                    <td>
+                                        <label asp-for="@data.FieldName" value="@data.FieldName" id="FieldName">@data.FieldName</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="status" value="@data.status" id="checkField">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+                    </table>
+
+                </div>
+            </div>
+            <div>
+                <div col-2>
+                    <button type="submit" class="btn btn-primary" id="btnSave">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            $("#btnSave").click(function () {
+                debugger;
+                var OrgId = $("#OrgId").val();
+                var FormType = $("#FormType").val();
+                var checkbox = document.getElementById("checkField");
+                var Json = $("#Json").val();
+
+                if (checkbox.checked) {
+                    console.log("Checkbox is checked");
+                    var Field = true;
+                } else {
+                    console.log("Checkbox is not checked");
+                    var Field = false;
+                }
+                if (OrgId == "") {
+                    $("#dvMessage").html("Please select Organization Name");
+                    return false;
+                }
+                if (FormType = "undefined") {
+                    $("#dvMsg").html("Please select Organization Form Type Name");
+                    return false;
+                }
+
+                const rowData = [];
+                $("tr.trrow").each(function () {
+                    var $this = $(this);
+                    var quantity1 = $this.find('td').find('label#FieldName').text();
+                    var quantity2 = $this.find('td').find('input#checkField').is(":checked");
+                    if (quantity2 == true) {
+                        rowData.push({
+                            FieldName: quantity1,
+                        });
+                    }
+                });
+
+                JsonData = JSON.stringify(rowData);
+                $('#JsonField').val(JsonData);
+                $("#MainForm").submit();
+                // var formData = {
+                //     OrgId: OrgId,
+                //     JsonField: JsonData,
+                // };
+                // $.ajax({
+                //     type: "POST",
+                //     url: 'OrganizationField/Organization',
+                //     dataType: "json",
+                //     // data: { OrgId: OrgId, JsonField: JsonData },
+                //     data: formData,
+                //     encode: true,
+                //     contentType: "application/json; charset=utf-8",
+                //     async: false,
+                //     success: function (response) {
+                //         var stat = response.Status || true;
+                //         console.log("success");
+                //     },
+                // });
+
+            });
+        });
+
+    </script>
+}

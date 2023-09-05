@@ -1,0 +1,175 @@
+﻿@model Campaign.Models.FieldViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="form-control">
+    <div class="row">
+        <div class="pcoded-inner-content">
+            <div class="page-header">
+                <h2>Add Fields</h2>
+                <div class="page-block">
+                    @using (Html.BeginForm("InsertField", "FieldDetail", FormMethod.Post))
+                    {
+                        <input type="hidden" id="Jsondata" name="Jsondata">
+                        <div class="row align-items-center">
+                            @* @Html.DropDownListFor(model => model.CategoryId, ViewBag.Category as SelectList, "Select Category", new { @class = "form-control", @id="CategoryId"}) *@
+                            <table id="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div>Column Field</div>
+                                            @* @Html.EditorFor(model => model.tblField[0].FieldName, new { @class = "form-control"}) *@
+                                            <span class="text-danger" asp-validation-for="tblField[0].FieldName"></span>
+                                        </th>
+                                        <th>
+                                            Data Type
+                                            @* @Html.DropDownListFor(model => model.tblField[0].FieldName, ViewBag.FieldType as SelectList, "Select Data Type", new { @class = "form-control", @id="FieldType"}) *@
+                                        </th>
+                                        <th>
+                                            <div class="second-select">Category Name</div>
+                                        </th>
+                                        <th>
+                                            Order By Id
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-body">
+                                    <!-- Dynamic rows will be added here -->
+                                </tbody>
+                                <button type="button" id="add-row">Add Field</button>
+                            </table>
+
+                        </div>
+                        <button id="btnSubmit" class="btn btn-success" type="submit">Save</button>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const tableBody = document.getElementById("table-body");
+            const addRowButton = document.getElementById("add-row");
+
+            // Function to create a new row
+            function createRow() {
+                debugger;
+                const row = document.createElement("tr");
+                const textCell = document.createElement("td");
+                const dropdownCell = document.createElement("td");
+                const CategoryCell = document.createElement("td");
+                const OrderCell = document.createElement("td");
+
+                const textField = document.createElement("input");
+                textField.type = "text";
+                textCell.appendChild(textField);
+
+                const dropdown = document.createElement("select");
+                // Populate dropdown options here
+                //const dropdownOptions = ["INT", "VARCHAR(50)", "VARCHAR(100)", "VARCHAR(255)", "VARCHAR(MAX)", "NVARCHAR(50)", "NVARCHAR(100)", "NVARCHAR(255)", "NVARCHAR(MAX)", "Decimal(18,2)", "DateTime", "BIT"];
+                const dropdownOptions = @Html.Raw(Json.Serialize(ViewBag.FieldType));
+                dropdownOptions.forEach(optionText => {
+                    const option = document.createElement("option");
+                    option.text = optionText.text;
+                    dropdown.appendChild(option);
+                });
+                dropdownCell.appendChild(dropdown);
+
+                const dropdown1 = document.createElement("select");
+                dropdown1.className = "second-select";
+                const dropdown1Options = @Html.Raw(Json.Serialize(ViewBag.Category));
+                dropdown1Options.forEach(optionText => {
+                    const option = document.createElement("option");
+                    option.text = optionText.text;
+                    option.value = optionText.value;
+                    dropdown1.appendChild(option);
+                });
+                CategoryCell.appendChild(dropdown1);
+
+                const OrderField = document.createElement("input");
+                OrderField.type = "number";
+                OrderCell.appendChild(OrderField);
+
+                row.appendChild(textCell);
+                row.appendChild(dropdownCell);
+                row.appendChild(CategoryCell);
+                row.appendChild(OrderCell);
+                tableBody.appendChild(row);
+            }
+            function collectData() {
+                const rows = document.querySelectorAll("#table-body tr");
+                const rowData = [];
+
+                rows.forEach(row => {
+                    const textField = row.querySelector("input[type='text']");
+                    const dropdown = row.querySelector("select");
+                    const dropdown1 = row.querySelector(".second-select");
+                    const OrderField = row.querySelector("input[type='number']");
+
+                    rowData.push({
+                        FieldName: textField.value,
+                        DataType: dropdown.value,
+                        CategoryId: dropdown1.value,
+                        OrderId: OrderField.value
+                    });
+                });
+
+                return rowData;
+            }
+            // Attach event listener to the "Add Row" button
+            addRowButton.addEventListener("click", createRow);
+
+            $("#btnSubmit").click(function () {
+                debugger;
+                const data = collectData();
+                var jsondata = JSON.stringify(data);
+                $("#Jsondata").val(jsondata);
+            })
+        });
+
+    </script>
+    @*   <script type="text/javascript">
+        var i = 1;
+        function BtnAdd() {
+            debugger;
+            var v = $("#TRow").clone().appendTo("TBody");
+            $("#sn").val(i);
+            i++;
+            $(v).find("input").val('');
+            $(v).removeClass('d-none');
+        }
+
+        function BtnDel(v) {
+            $(v).parent().parent().remove();
+        }
+
+        $("#dynamicForm").submit(function (e) {
+            debugger;
+            e.preventDefault();
+            $.ajax({
+                url: '@Url.Action("AddField", "FieldDetail")',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function () {
+                    // Do something on success
+                }
+            });
+        });
+    </script> *@
+}
+@* var id = $('#zero-configuration tr:last').attr('id');
+            var nums = id.split('_').pop();
+            var num =parseInt(nums)+1;
+            var newid = $("#TRow_" + num + "");
+            var v = $("#TRow").clone().appendTo("TBody");
+            var value = $("#sn_id_1").val();
+            $("#sn_id_2").text(@i);
+            $(v).find("input").val(''); *@
